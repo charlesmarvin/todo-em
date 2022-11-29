@@ -14,7 +14,9 @@ export default function TodoEditor({
   value,
   onSave,
 }: TodoEditorProps) {
-  const [entry, setEntry] = React.useState(value?.title ?? "");
+  const [entry, setEntry] = React.useState(() =>
+    [value?.title, value?.detail].filter((s) => s && s.length).join("\n")
+  );
   const { addItem, updateItem } = useTodoContext();
 
   const handleChange = (event: any) => {
@@ -25,16 +27,18 @@ export default function TodoEditor({
       onSave && onSave();
       return;
     }
+    const [title, ...details] = entry.split("\n");
+    const detail = details.join("\n");
     if (value) {
       updateItem(value.id, {
-        title: entry,
-        detail: "",
+        title,
+        detail,
       });
     } else {
       addItem({
         id: newIdentifier(),
-        title: entry,
-        detail: "",
+        title: title,
+        detail: detail,
         priority: priority,
         createdAt: new Date(),
       });
