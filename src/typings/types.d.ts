@@ -23,7 +23,7 @@ export interface TodoProviderState {
   addItem: (item: TodoItem) => void;
   updateItem: (id: string, payload: object) => void;
   removeItem: (id: string) => void;
-};
+}
 
 export type TodoActions =
   | { type: "SET_ITEMS"; payload: TodoItem[] }

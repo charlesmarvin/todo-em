@@ -31,7 +31,7 @@ const renderHeading = (priority?: Priority) => {
     case Priority.DELEGATE:
       return <strong>Delegate</strong>;
     case Priority.DELETE:
-      return <strong>Don't Care</strong>;
+      return <strong>Don&apos;t Care</strong>;
     default:
       return <></>;
   }

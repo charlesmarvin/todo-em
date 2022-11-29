@@ -82,7 +82,7 @@ export default function SideMenu({
           Icon={ArchiveBoxXMarkIcon}
           onClick={handleFilterFn(Priority.DELETE)}
         >
-          Don't Care
+          Don&apos;t Care
         </NavButton>
 
         <div className="w-full border-t border-gray-300" />

@@ -1,5 +1,9 @@
 import React from "react";
-import { InitialTodoState, TodoItem, TodoActions, TodoProviderState } from "typings/types.d";
+import {
+  InitialTodoState,
+  TodoItem,
+  TodoActions,
+} from "typings/types.d";
 import useLocalStorage from "./useLocalStorage";
 
 export const initialState: InitialTodoState = {
@@ -12,11 +16,11 @@ export const newIdentifier = (len = 12) =>
 function reducer(state: InitialTodoState, action: TodoActions) {
   switch (action.type) {
     case "SET_ITEMS":
-      return {items: action.payload};
+      return { items: action.payload };
 
     case "ADD_ITEM": {
       const items = [...state.items, action.payload];
-      return {items};
+      return { items };
     }
 
     case "UPDATE_ITEM": {
@@ -27,12 +31,12 @@ function reducer(state: InitialTodoState, action: TodoActions) {
           ...action.payload,
         };
       });
-      return {items}
+      return { items };
     }
 
     case "REMOVE_ITEM": {
       const items = state.items.filter((i: TodoItem) => i.id !== action.id);
-      return {items};
+      return { items };
     }
 
     default:
@@ -40,21 +44,24 @@ function reducer(state: InitialTodoState, action: TodoActions) {
   }
 }
 
-const useLocalStorageReducer = (): [InitialTodoState, React.Dispatch<TodoActions>] => {
-  const [savedState, saveState] = useLocalStorage('todo-em', initialState)
+const useLocalStorageReducer = (): [
+  InitialTodoState,
+  React.Dispatch<TodoActions>
+] => {
+  const [savedState, saveState] = useLocalStorage("todo-em", initialState);
   const reducerLocalStorage = React.useCallback(
     (state: InitialTodoState, action: TodoActions) => {
-      const newState = reducer(savedState, action)
+      const newState = reducer(savedState, action);
       if (newState !== initialState) {
-        saveState(newState)
+        saveState(newState);
       }
-      return newState
+      return newState;
     },
-    [saveState]
-  )
-  const [_, dispatch] = React.useReducer(reducerLocalStorage, savedState)
-  return [savedState, dispatch]
-}
+    [savedState, saveState]
+  );
+  const [_, dispatch] = React.useReducer(reducerLocalStorage, savedState);
+  return [savedState, dispatch];
+};
 
 export function useTodo() {
   const [state, dispatch] = useLocalStorageReducer();
@@ -105,12 +112,12 @@ export function useTodo() {
   const getItem = (id: TodoItem["id"]) =>
     state.items.find((i: TodoItem) => i.id === id);
 
-    return React.useMemo(() => ({
-      getItem,
-      setItems,
-      addItem,
-      updateItem,
-      removeItem,
-      ...state, 
-    }), [state])
-};
+  return {
+    getItem,
+    setItems,
+    addItem,
+    updateItem,
+    removeItem,
+    ...state,
+  };
+}
