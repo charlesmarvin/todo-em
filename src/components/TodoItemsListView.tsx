@@ -25,13 +25,13 @@ const PriorityIcons = {
 const renderHeading = (priority?: Priority) => {
   switch (priority) {
     case Priority.DO:
-      return <strong>Important and Urgent</strong>;
+      return <strong>Do</strong>;
     case Priority.SCHEDULE:
-      return <strong>Important Not Urgent</strong>;
+      return <strong>Schedule</strong>;
     case Priority.DELEGATE:
-      return <strong>Urgent Not Important</strong>;
+      return <strong>Delegate</strong>;
     case Priority.DELETE:
-      return <strong>Not Important Not Urgent</strong>;
+      return <strong>Don't Care</strong>;
     default:
       return <></>;
   }
@@ -70,6 +70,7 @@ export default function TodoItemsListView({
 }: TodoItemsListViewProps) {
   const { items, removeItem, updateItem } = useTodoContext();
   const [editItem, setEditItem] = useState<TodoItem | undefined>(undefined);
+  const [showAddItem, setShowAddItem] = useState(false);
   const handleRemoveFn = (id: string) => {
     return () => {
       removeItem(id);
@@ -85,9 +86,15 @@ export default function TodoItemsListView({
   };
   const handleSave = () => {
     setEditItem(undefined);
+    setShowAddItem(false);
+  };
+  const handleShowAddItem = (event: any) => {
+    if (!event.target.getAttribute("data-container")) return;
+    setEditItem(undefined);
+    setShowAddItem(true);
   };
   return (
-    <div {...props}>
+    <div {...props} onClick={handleShowAddItem} data-container>
       {renderHeading(priorityFilter)}
       {items
         .filter(
@@ -125,6 +132,9 @@ export default function TodoItemsListView({
             </div>
           )
         )}
+      {showAddItem && (
+        <TodoEditor priority={priorityFilter} onSave={handleSave} />
+      )}
     </div>
   );
 }

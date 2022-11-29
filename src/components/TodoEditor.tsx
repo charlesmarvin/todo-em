@@ -21,7 +21,10 @@ export default function TodoEditor({
     setEntry(event.target.value);
   };
   const handleSave = (event: any) => {
-    if (!entry) return;
+    if (!entry) {
+      onSave && onSave();
+      return;
+    }
     if (value) {
       updateItem(value.id, {
         title: entry,

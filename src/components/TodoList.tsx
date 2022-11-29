@@ -28,5 +28,9 @@ export default function TodoList({
   activeView,
   priorityFilter,
 }: TodoListProps) {
-  return renderView(activeView, priorityFilter);
+  return (
+    <div className="h-full w-full p-3">
+      {renderView(activeView, priorityFilter)}
+    </div>
+  );
 }
