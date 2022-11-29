@@ -10,20 +10,24 @@ export default function TodoItemsGridView({
     <div {...props}>
       <div className="grid md:grid-cols-2 h-full md:divide-x">
         <div className="grid grid-rows-2 md:divide-y">
-          <div className="h-full p-2 overflow-y-auto">
-            <TodoItemsListView priorityFilter={Priority.DO} />
-          </div>
-          <div className="h-full p-2 overflow-y-auto">
-            <TodoItemsListView priorityFilter={Priority.SCHEDULE} />
-          </div>
+          <TodoItemsListView
+            className="h-full  p-2 overflow-y-auto"
+            priorityFilter={Priority.DO}
+          />
+          <TodoItemsListView
+            className="h-full  p-2 overflow-y-auto"
+            priorityFilter={Priority.SCHEDULE}
+          />
         </div>
         <div className="grid grid-rows-2 md:divide-y">
-          <div className="h-full  p-2 overflow-y-auto">
-            <TodoItemsListView priorityFilter={Priority.DELEGATE} />
-          </div>
-          <div className="h-full p-2 overflow-y-auto">
-            <TodoItemsListView priorityFilter={Priority.DELETE} />
-          </div>
+          <TodoItemsListView
+            className="h-full  p-2 overflow-y-auto"
+            priorityFilter={Priority.DELEGATE}
+          />
+          <TodoItemsListView
+            className="h-full  p-2 overflow-y-auto"
+            priorityFilter={Priority.DELETE}
+          />
         </div>
       </div>
     </div>

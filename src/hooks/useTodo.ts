@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  InitialTodoState,
-  TodoItem,
-  TodoActions,
-} from "typings/types.d";
+import { InitialTodoState, TodoItem, TodoActions } from "typings/types.d";
 import useLocalStorage from "./useLocalStorage";
 
 export const initialState: InitialTodoState = {
