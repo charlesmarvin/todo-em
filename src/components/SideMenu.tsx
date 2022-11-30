@@ -34,7 +34,6 @@ function NavButton({
   isActive: boolean;
 }) {
   const handleClick = () => onClick && onClick();
-  console.log("isActive", isActive);
   return (
     <button
       className={cn(

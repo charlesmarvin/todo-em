@@ -67,8 +67,11 @@ export default function TodoItemsListView({
   ...props
 }: TodoItemsListViewProps) {
   const { items, removeItem, updateItem } = useTodoContext();
-  const [editItem, setEditItem] = useState<TodoItem | undefined>(undefined);
-  const [showAddItem, setShowAddItem] = useState(false);
+  const [editItem, setEditItem] = React.useState<TodoItem | undefined>(
+    undefined
+  );
+  const [showAddItem, setShowAddItem] = React.useState(false);
+
   const handleRemoveFn = (id: string) => {
     return (event: React.SyntheticEvent) => {
       event.stopPropagation();
@@ -87,9 +90,8 @@ export default function TodoItemsListView({
       setEditItem(item);
     };
   };
-  const handleSave = () => {
+  const handleEditClose = () => {
     setEditItem(undefined);
-    setShowAddItem(false);
   };
   const handleShowAddItem = (event: React.SyntheticEvent) => {
     if (!event.currentTarget.getAttribute("data-container")) {
@@ -97,6 +99,9 @@ export default function TodoItemsListView({
     }
     setEditItem(undefined);
     setShowAddItem(true);
+  };
+  const handleAddItemClose = () => {
+    setShowAddItem(false);
   };
   return (
     <div {...props} onClick={handleShowAddItem} data-container>
@@ -114,7 +119,7 @@ export default function TodoItemsListView({
                   key={item.id}
                   value={item}
                   priority={priorityFilter}
-                  onSave={handleSave}
+                  onClose={handleEditClose}
                 />
               ) : (
                 <div
@@ -122,7 +127,7 @@ export default function TodoItemsListView({
                   className="flex justify-between hover:bg-orange-50 hover:rounded-sm"
                 >
                   <div
-                    className="flex items-center px-3"
+                    className="grow items-center px-3"
                     onClick={handleEditFn(item)}
                   >
                     {item.title}
@@ -148,7 +153,10 @@ export default function TodoItemsListView({
               )
             )}
           {showAddItem && (
-            <TodoEditor priority={priorityFilter} onSave={handleSave} />
+            <TodoEditor
+              priority={priorityFilter}
+              onClose={handleAddItemClose}
+            />
           )}
         </div>
       </div>
