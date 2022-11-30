@@ -5,7 +5,9 @@ import { Priority } from "typings/types.d";
 
 export default function IndexPage() {
   const [viewType, setViewType] = React.useState(ViewType.LIST);
-  const [priority, setPriority] = React.useState<Priority | undefined>();
+  const [priority, setPriority] = React.useState<Priority | undefined>(
+    Priority.DO
+  );
 
   const handleMenuSelection = (viewType: ViewType, priority?: Priority) => {
     setViewType(viewType);
@@ -14,8 +16,10 @@ export default function IndexPage() {
   return (
     <div className="flex flex-row h-screen">
       <SideMenu
-        className="flex-none bg-amber-200"
+        className="shrink-0 bg-amber-200"
         onSelect={handleMenuSelection}
+        activePriority={priority}
+        activeView={viewType}
       />
       <TodoList
         className="h-full w-full p-3 bg-amber-100"
