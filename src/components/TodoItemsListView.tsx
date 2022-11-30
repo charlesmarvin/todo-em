@@ -44,9 +44,10 @@ function Button({
 }: {
   children?: React.ReactNode;
   Icon?: React.ElementType;
-  onClick?: () => void;
+  onClick?: (event: React.SyntheticEvent) => void;
 }) {
-  const handleClick = () => onClick && onClick();
+  const handleClick = (event: React.SyntheticEvent) =>
+    onClick && onClick(event);
 
   return (
     <button
@@ -72,12 +73,14 @@ export default function TodoItemsListView({
   const [editItem, setEditItem] = useState<TodoItem | undefined>(undefined);
   const [showAddItem, setShowAddItem] = useState(false);
   const handleRemoveFn = (id: string) => {
-    return () => {
+    return (event: React.SyntheticEvent) => {
+      event.stopPropagation();
       removeItem(id);
     };
   };
   const handleUpdateFn = (id: string, priority: Priority) => {
-    return () => {
+    return (event: React.SyntheticEvent) => {
+      event.stopPropagation();
       updateItem(id, { priority });
     };
   };
@@ -102,42 +105,47 @@ export default function TodoItemsListView({
     <div {...props} onClick={handleShowAddItem} data-container>
       <div className="p-3">
         {renderHeading(priorityFilter)}
-        {items
-          .filter(
-            (item: TodoItem) =>
-              !priorityFilter || item.priority === priorityFilter
-          )
-          .map((item: TodoItem) =>
-            editItem?.id === item.id ? (
-              <TodoEditor
-                key={item.id}
-                value={item}
-                priority={priorityFilter}
-                onSave={handleSave}
-              />
-            ) : (
-              <div key={item.id} className="flex justify-between">
-                <div onClick={handleEditFn(item)}>{item.title}</div>
-                <div className="flex flex-row divide-x">
-                  <div className="flex flex-row">
-                    {Object.keys(PriorityIcons)
-                      .filter((key) => key != priorityFilter?.toString())
-                      .map((key: any) => (
-                        <Button
-                          key={key}
-                          Icon={PriorityIcons[key]}
-                          onClick={handleUpdateFn(item.id, +key)}
-                        />
-                      ))}
-                  </div>
-                  <Button Icon={TrashIcon} onClick={handleRemoveFn(item.id)} />
-                </div>
-              </div>
+        <div className="overflow-y-scroll">
+          {items
+            .filter(
+              (item: TodoItem) =>
+                !priorityFilter || item.priority === priorityFilter
             )
+            .map((item: TodoItem) =>
+              editItem?.id === item.id ? (
+                <TodoEditor
+                  key={item.id}
+                  value={item}
+                  priority={priorityFilter}
+                  onSave={handleSave}
+                />
+              ) : (
+                <div key={item.id} className="flex justify-between">
+                  <div onClick={handleEditFn(item)}>{item.title}</div>
+                  <div className="flex flex-row divide-x">
+                    <div className="flex flex-row">
+                      {Object.keys(PriorityIcons)
+                        .filter((key) => key != priorityFilter?.toString())
+                        .map((key: any) => (
+                          <Button
+                            key={key}
+                            Icon={PriorityIcons[key]}
+                            onClick={handleUpdateFn(item.id, +key)}
+                          />
+                        ))}
+                    </div>
+                    <Button
+                      Icon={TrashIcon}
+                      onClick={handleRemoveFn(item.id)}
+                    />
+                  </div>
+                </div>
+              )
+            )}
+          {showAddItem && (
+            <TodoEditor priority={priorityFilter} onSave={handleSave} />
           )}
-        {showAddItem && (
-          <TodoEditor priority={priorityFilter} onSave={handleSave} />
-        )}
+        </div>
       </div>
     </div>
   );
