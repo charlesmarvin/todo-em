@@ -12,9 +12,16 @@ export default function IndexPage() {
     setPriority(priority);
   };
   return (
-    <div className="flex flex-row gap-10 h-screen">
-      <SideMenu className="flex-none w-40" onSelect={handleMenuSelection} />
-      <TodoList activeView={viewType} priorityFilter={priority} />
+    <div className="flex flex-row h-screen">
+      <SideMenu
+        className="flex-none w-40 bg-amber-200"
+        onSelect={handleMenuSelection}
+      />
+      <TodoList
+        className="h-full w-full p-3 bg-amber-100"
+        activeView={viewType}
+        priorityFilter={priority}
+      />
     </div>
   );
 }

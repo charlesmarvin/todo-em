@@ -20,17 +20,17 @@ function renderView(view: ViewType, priorityFilter?: Priority) {
 }
 
 interface TodoListProps {
+  className?: string;
   activeView: ViewType;
   priorityFilter?: Priority;
 }
 
 export default function TodoList({
+  className,
   activeView,
   priorityFilter,
 }: TodoListProps) {
   return (
-    <div className="h-full w-full p-3">
-      {renderView(activeView, priorityFilter)}
-    </div>
+    <div className={className}>{renderView(activeView, priorityFilter)}</div>
   );
 }

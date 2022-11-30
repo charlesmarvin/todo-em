@@ -51,7 +51,7 @@ export default function TodoEditor({
       <div className="m-2">
         <textarea
           autoFocus
-          className="w-full prose prose-code:prose-sm p-1.5 bg-yellow-100 rounded-lg"
+          className="w-full prose prose-code:prose-sm p-1.5 bg-amber-50 rounded-lg"
           value={entry}
           onChange={handleChange}
           onBlur={handleSave}
