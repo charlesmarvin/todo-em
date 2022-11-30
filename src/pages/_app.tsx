@@ -8,8 +8,7 @@ interface TodoAppProps {
 
 const TodoApp = ({ Component, ...props }: TodoAppProps) => {
   const title = "Todo EM";
-  const description =
-    "Simple web based off line Todo App based on Eisenhower Matrix";
+  const description = "Eisenhower Matrix Todo App With Offline Support";
   const appUrl = "https://todo-em.vercel.app/";
   return (
     <TodoProvider>
