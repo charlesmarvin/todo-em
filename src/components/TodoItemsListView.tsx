@@ -37,7 +37,7 @@ const renderHeading = (priority?: Priority) => {
   }
 };
 
-function Button({
+function IconButton({
   children,
   Icon,
   onClick,
@@ -50,10 +50,7 @@ function Button({
     onClick && onClick(event);
 
   return (
-    <button
-      className="group flex items-center px-2 py-2 text-base font-medium rounded-md"
-      onClick={handleClick}
-    >
+    <button className="group flex items-center px-2 py-2" onClick={handleClick}>
       {Icon && (
         <Icon
           className={cn("flex-shrink-0 h-4 w-4", children && "mr-4")}
@@ -104,7 +101,7 @@ export default function TodoItemsListView({
   return (
     <div {...props} onClick={handleShowAddItem} data-container>
       <div className="p-3">
-        {renderHeading(priorityFilter)}
+        <div className="px-3">{renderHeading(priorityFilter)}</div>
         <div className="overflow-y-scroll">
           {items
             .filter(
@@ -120,21 +117,29 @@ export default function TodoItemsListView({
                   onSave={handleSave}
                 />
               ) : (
-                <div key={item.id} className="flex justify-between">
-                  <div onClick={handleEditFn(item)}>{item.title}</div>
+                <div
+                  key={item.id}
+                  className="flex justify-between hover:bg-orange-50 hover:rounded-sm"
+                >
+                  <div
+                    className="flex items-center px-3"
+                    onClick={handleEditFn(item)}
+                  >
+                    {item.title}
+                  </div>
                   <div className="flex flex-row divide-x">
                     <div className="flex flex-row">
                       {Object.keys(PriorityIcons)
                         .filter((key) => key != priorityFilter?.toString())
                         .map((key: any) => (
-                          <Button
+                          <IconButton
                             key={key}
                             Icon={PriorityIcons[key]}
                             onClick={handleUpdateFn(item.id, +key)}
                           />
                         ))}
                     </div>
-                    <Button
+                    <IconButton
                       Icon={TrashIcon}
                       onClick={handleRemoveFn(item.id)}
                     />

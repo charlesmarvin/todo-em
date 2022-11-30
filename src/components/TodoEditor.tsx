@@ -47,16 +47,21 @@ export default function TodoEditor({
     onSave && onSave();
   };
   return (
-    <>
-      <div className="m-2">
-        <textarea
-          autoFocus
-          className="w-full prose prose-code:prose-sm p-1.5 bg-amber-50 rounded-lg"
-          value={entry}
-          onChange={handleChange}
-          onBlur={handleSave}
-        />
-      </div>
-    </>
+    <div className="m-2">
+      <textarea
+        id="editor"
+        autoFocus
+        className="w-full prose prose-code:prose-sm p-1.5 bg-amber-50 rounded-sm"
+        placeholder={`Title
+Description`}
+        value={entry}
+        onChange={handleChange}
+        onBlur={handleSave}
+      />
+      <label htmlFor="editor" className="text-xs text-gray-700">
+        Task summary. Optionally, hit <code>&lt;return&gt;</code> to add a
+        description. Entry will be saved when the field loses focus.
+      </label>
+    </div>
   );
 }

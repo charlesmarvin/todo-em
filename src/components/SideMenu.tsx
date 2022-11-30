@@ -62,7 +62,7 @@ export default function SideMenu({
   return (
     <div className={className}>
       {children}
-      <nav className="space-y-1 px-2">
+      <nav className="space-y-1 px-2 pt-4">
         <NavButton Icon={SparklesIcon} onClick={handleFilterFn(Priority.DO)}>
           Do
         </NavButton>
