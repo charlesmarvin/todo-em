@@ -8,12 +8,12 @@ function renderView(view: ViewType, priorityFilter?: Priority) {
     case ViewType.LIST:
       return (
         <TodoItemsListView
-          className="flex-auto h-screen"
+          className="flex-auto h-full"
           priorityFilter={priorityFilter}
         />
       );
     case ViewType.GRID:
-      return <TodoItemsGridView className="flex-auto h-screen" />;
+      return <TodoItemsGridView className="flex-auto h-full" />;
     default:
       return null;
   }

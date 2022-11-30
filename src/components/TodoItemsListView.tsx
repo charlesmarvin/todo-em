@@ -100,46 +100,45 @@ export default function TodoItemsListView({
   };
   return (
     <div {...props} onClick={handleShowAddItem} data-container>
-      {renderHeading(priorityFilter)}
-      {items
-        .filter(
-          (item: TodoItem) =>
-            !priorityFilter || item.priority === priorityFilter
-        )
-        .map((item: TodoItem) =>
-          editItem?.id === item.id ? (
-            <TodoEditor
-              key={item.id}
-              value={item}
-              priority={priorityFilter}
-              onSave={handleSave}
-            />
-          ) : (
-            <div
-              key={item.id}
-              className="flex justify-between p-1.5 hover:bg-grey "
-            >
-              <div onClick={handleEditFn(item)}>{item.title}</div>
-              <div className="flex flex-row divide-x">
-                <div className="flex flex-row">
-                  {Object.keys(PriorityIcons)
-                    .filter((key) => key != priorityFilter?.toString())
-                    .map((key: any) => (
-                      <Button
-                        key={key}
-                        Icon={PriorityIcons[key]}
-                        onClick={handleUpdateFn(item.id, +key)}
-                      />
-                    ))}
-                </div>
-                <Button Icon={TrashIcon} onClick={handleRemoveFn(item.id)} />
-              </div>
-            </div>
+      <div className="p-3">
+        {renderHeading(priorityFilter)}
+        {items
+          .filter(
+            (item: TodoItem) =>
+              !priorityFilter || item.priority === priorityFilter
           )
+          .map((item: TodoItem) =>
+            editItem?.id === item.id ? (
+              <TodoEditor
+                key={item.id}
+                value={item}
+                priority={priorityFilter}
+                onSave={handleSave}
+              />
+            ) : (
+              <div key={item.id} className="flex justify-between">
+                <div onClick={handleEditFn(item)}>{item.title}</div>
+                <div className="flex flex-row divide-x">
+                  <div className="flex flex-row">
+                    {Object.keys(PriorityIcons)
+                      .filter((key) => key != priorityFilter?.toString())
+                      .map((key: any) => (
+                        <Button
+                          key={key}
+                          Icon={PriorityIcons[key]}
+                          onClick={handleUpdateFn(item.id, +key)}
+                        />
+                      ))}
+                  </div>
+                  <Button Icon={TrashIcon} onClick={handleRemoveFn(item.id)} />
+                </div>
+              </div>
+            )
+          )}
+        {showAddItem && (
+          <TodoEditor priority={priorityFilter} onSave={handleSave} />
         )}
-      {showAddItem && (
-        <TodoEditor priority={priorityFilter} onSave={handleSave} />
-      )}
+      </div>
     </div>
   );
 }

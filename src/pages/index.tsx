@@ -14,7 +14,7 @@ export default function IndexPage() {
   return (
     <div className="flex flex-row h-screen">
       <SideMenu
-        className="flex-none w-40 bg-amber-200"
+        className="flex-none bg-amber-200"
         onSelect={handleMenuSelection}
       />
       <TodoList
