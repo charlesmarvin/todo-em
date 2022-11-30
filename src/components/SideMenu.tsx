@@ -25,11 +25,13 @@ export enum ViewType {
 function NavButton({
   children,
   Icon,
+  title,
   onClick,
   isActive = false,
 }: {
   children?: React.ReactNode;
   Icon?: React.ElementType;
+  title?: string;
   onClick?: () => void;
   isActive: boolean;
 }) {
@@ -40,6 +42,7 @@ function NavButton({
         "group flex items-center w-full px-2 py-2 text-base font-medium transition-all hover:bg-amber-300 border-r-4",
         isActive ? "border-amber-400" : "border-transparent"
       )}
+      title={title}
       onClick={handleClick}
     >
       {Icon && (
@@ -73,6 +76,7 @@ export default function SideMenu({
           Icon={SparklesIcon}
           onClick={handleFilterFn(Priority.DO)}
           isActive={!isGridActive && activePriority === Priority.DO}
+          title="Do"
         >
           Do
         </NavButton>
@@ -80,6 +84,7 @@ export default function SideMenu({
           Icon={ArrowUturnRightIcon}
           onClick={handleFilterFn(Priority.DELEGATE)}
           isActive={!isGridActive && activePriority === Priority.DELEGATE}
+          title="Delegate"
         >
           Delegate
         </NavButton>
@@ -94,6 +99,7 @@ export default function SideMenu({
           Icon={ArchiveBoxXMarkIcon}
           onClick={handleFilterFn(Priority.DELETE)}
           isActive={!isGridActive && activePriority === Priority.DELETE}
+          title="Don't Care"
         >
           Don&apos;t Care
         </NavButton>
@@ -104,6 +110,7 @@ export default function SideMenu({
           Icon={Squares2X2Icon}
           onClick={handleViewChange}
           isActive={isGridActive}
+          title="All Items"
         >
           All Items
         </NavButton>

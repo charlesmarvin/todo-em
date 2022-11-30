@@ -9,17 +9,17 @@ import { useTodoContext } from "context/TodoProvider";
 import { Priority, TodoItem } from "typings/types.d";
 import TodoEditor from "./TodoEditor";
 import cn from "clsx";
-import React, { useState } from "react";
+import React from "react";
 
 interface TodoItemsListViewProps extends React.HTMLAttributes<HTMLDivElement> {
   priorityFilter?: Priority;
 }
 
 const PriorityIcons = {
-  [Priority.DO]: SparklesIcon,
-  [Priority.SCHEDULE]: CalendarDaysIcon,
-  [Priority.DELEGATE]: ArrowUturnRightIcon,
-  [Priority.DELETE]: ArchiveBoxXMarkIcon,
+  [Priority.DO]: { icon: SparklesIcon, title: "Do" },
+  [Priority.SCHEDULE]: { icon: CalendarDaysIcon, title: "Schedule" },
+  [Priority.DELEGATE]: { icon: ArrowUturnRightIcon, title: "Delegate" },
+  [Priority.DELETE]: { icon: ArchiveBoxXMarkIcon, title: "Don&apos;t Care" },
 };
 
 const renderHeading = (priority?: Priority) => {
@@ -41,16 +41,22 @@ function IconButton({
   children,
   Icon,
   onClick,
+  title,
 }: {
   children?: React.ReactNode;
   Icon?: React.ElementType;
+  title?: string;
   onClick?: (event: React.SyntheticEvent) => void;
 }) {
   const handleClick = (event: React.SyntheticEvent) =>
     onClick && onClick(event);
 
   return (
-    <button className="group flex items-center px-2 py-2" onClick={handleClick}>
+    <button
+      className="group flex items-center px-2 py-2"
+      title={title}
+      onClick={handleClick}
+    >
       {Icon && (
         <Icon
           className={cn("flex-shrink-0 h-4 w-4", children && "mr-4")}
@@ -139,7 +145,8 @@ export default function TodoItemsListView({
                         .map((key: any) => (
                           <IconButton
                             key={key}
-                            Icon={PriorityIcons[key]}
+                            Icon={PriorityIcons[key].icon}
+                            title={PriorityIcons[key].title}
                             onClick={handleUpdateFn(item.id, +key)}
                           />
                         ))}
@@ -147,6 +154,7 @@ export default function TodoItemsListView({
                     <IconButton
                       Icon={TrashIcon}
                       onClick={handleRemoveFn(item.id)}
+                      title="Delete"
                     />
                   </div>
                 </div>
