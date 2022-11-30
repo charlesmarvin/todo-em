@@ -9,7 +9,7 @@ import { useTodoContext } from "context/TodoProvider";
 import { Priority, TodoItem } from "typings/types.d";
 import TodoEditor from "./TodoEditor";
 import cn from "clsx";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface TodoItemsListViewProps extends React.HTMLAttributes<HTMLDivElement> {
   priorityFilter?: Priority;
@@ -82,14 +82,19 @@ export default function TodoItemsListView({
     };
   };
   const handleEditFn = (item: TodoItem) => {
-    return () => setEditItem(item);
+    return (event: React.SyntheticEvent) => {
+      event.stopPropagation();
+      setEditItem(item);
+    };
   };
   const handleSave = () => {
     setEditItem(undefined);
     setShowAddItem(false);
   };
-  const handleShowAddItem = (event: any) => {
-    if (!event.target.getAttribute("data-container")) return;
+  const handleShowAddItem = (event: React.SyntheticEvent) => {
+    if (!event.currentTarget.getAttribute("data-container")) {
+      return;
+    }
     setEditItem(undefined);
     setShowAddItem(true);
   };
