@@ -9,11 +9,13 @@ export default function useLocalStorage<T>(
     const data = window.localStorage.getItem(key);
     if (data) {
       try {
-        setStoredValue(JSON.parse(data))
+        setStoredValue(JSON.parse(data));
       } catch (error) {
-        console.warn({data, error})
-        alert("There was an issue reading your stored TODOs. It's likely the data has been corrupted. The stored data has been written to your browser console.")
-        window.localStorage.removeItem(key)
+        console.warn({ data, error });
+        alert(
+          "There was an issue reading your stored TODOs. It's likely the data has been corrupted. The stored data has been written to your browser console."
+        );
+        window.localStorage.removeItem(key);
       }
     }
   }, [key]);
