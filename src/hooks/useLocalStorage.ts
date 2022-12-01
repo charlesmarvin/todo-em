@@ -9,7 +9,15 @@ export default function useLocalStorage<T>(
     const data = window.localStorage.getItem(key);
     if (data) {
       try {
-        setStoredValue(JSON.parse(data));
+        const parsedData = JSON.parse(data);
+        if (typeof parsedData.activeView === "string") {
+          console.log("Migration view persistence schema");
+          parsedData.activeView = {
+            view: parsedData.activeView,
+            priority: parsedData.activePriority,
+          };
+        }
+        setStoredValue(parsedData);
       } catch (error) {
         console.warn({ data, error });
         alert(
