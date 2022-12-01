@@ -13,13 +13,14 @@ export default function useLocalStorage<T>(
   }, [key]);
 
   const setValue = (value: Function | T) => {
-    try {
-      const valueToStore =
+    const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
+    try {
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
       console.error(error);
+      alert("There was an error accessing your browser's local storage. Please ensure your browser supports local storage.")
     }
   };
 

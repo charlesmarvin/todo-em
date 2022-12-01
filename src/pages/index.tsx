@@ -1,30 +1,26 @@
-import SideMenu, { ViewType } from "components/SideMenu";
+import SideMenu from "components/SideMenu";
 import TodoList from "components/TodoList";
+import { useTodoContext } from "context/TodoProvider";
 import React from "react";
-import { Priority } from "typings/types.d";
+import { ActiveView } from "typings/types.d";
 
 export default function IndexPage() {
-  const [viewType, setViewType] = React.useState(ViewType.LIST);
-  const [priority, setPriority] = React.useState<Priority | undefined>(
-    Priority.DO
-  );
+  const { activeView, setActiveView } = useTodoContext();
 
-  const handleMenuSelection = (viewType: ViewType, priority?: Priority) => {
-    setViewType(viewType);
-    setPriority(priority);
+  const handleMenuSelection = (nextView: ActiveView) => {
+    setActiveView(nextView);
   };
+
   return (
     <div className="flex flex-row h-screen">
       <SideMenu
         className="shrink-0 bg-amber-200"
         onSelect={handleMenuSelection}
-        activePriority={priority}
-        activeView={viewType}
+        activeView={activeView}
       />
       <TodoList
         className="h-full w-full p-3 bg-amber-100"
-        activeView={viewType}
-        priorityFilter={priority}
+        activeView={activeView}
       />
     </div>
   );

@@ -1,15 +1,14 @@
-import { Priority } from "typings/types.d";
-import { ViewType } from "./SideMenu";
+import { ActiveView, Priority, ViewType } from "typings/types.d";
 import TodoItemsGridView from "./TodoItemsGridView";
 import TodoItemsListView from "./TodoItemsListView";
 
-function renderView(view: ViewType, priorityFilter?: Priority) {
-  switch (view) {
+function renderView(view: ActiveView) {
+  switch (view.view) {
     case ViewType.LIST:
       return (
         <TodoItemsListView
           className="flex-auto h-full"
-          priorityFilter={priorityFilter}
+          priorityFilter={view.priority}
         />
       );
     case ViewType.GRID:
@@ -21,16 +20,9 @@ function renderView(view: ViewType, priorityFilter?: Priority) {
 
 interface TodoListProps {
   className?: string;
-  activeView: ViewType;
-  priorityFilter?: Priority;
+  activeView: ActiveView;
 }
 
-export default function TodoList({
-  className,
-  activeView,
-  priorityFilter,
-}: TodoListProps) {
-  return (
-    <div className={className}>{renderView(activeView, priorityFilter)}</div>
-  );
+export default function TodoList({ className, activeView }: TodoListProps) {
+  return <div className={className}>{renderView(activeView)}</div>;
 }

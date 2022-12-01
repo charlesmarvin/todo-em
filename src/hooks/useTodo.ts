@@ -1,9 +1,10 @@
 import React from "react";
-import { InitialTodoState, TodoItem, TodoActions } from "typings/types.d";
+import { InitialTodoState, TodoItem, TodoActions, Priority, ViewType, ActiveView } from "typings/types.d";
 import useLocalStorage from "./useLocalStorage";
 
 export const initialState: InitialTodoState = {
   items: [],
+  activeView: {view: ViewType.LIST, priority: Priority.DO}
 };
 
 export const newIdentifier = (len = 12) =>
@@ -12,11 +13,11 @@ export const newIdentifier = (len = 12) =>
 function reducer(state: InitialTodoState, action: TodoActions) {
   switch (action.type) {
     case "SET_ITEMS":
-      return { items: action.payload };
+      return { ...state, items: action.payload };
 
     case "ADD_ITEM": {
       const items = [...state.items, action.payload];
-      return { items };
+      return { ...state, items };
     }
 
     case "UPDATE_ITEM": {
@@ -27,12 +28,17 @@ function reducer(state: InitialTodoState, action: TodoActions) {
           ...action.payload,
         };
       });
-      return { items };
+      return { ...state, items };
     }
 
     case "REMOVE_ITEM": {
       const items = state.items.filter((i: TodoItem) => i.id !== action.id);
-      return { items };
+      return { ...state, items };
+    }
+
+    case "SET_ACTIVE_VIEW": {
+      const activeView = {...state.activeView, ...action.payload}
+      return {...state, activeView}
     }
 
     default:
@@ -108,12 +114,21 @@ export function useTodo() {
   const getItem = (id: TodoItem["id"]) =>
     state.items.find((i: TodoItem) => i.id === id);
 
+  
+    const setActiveView = (view: ActiveView) => {
+      dispatch({
+        type: "SET_ACTIVE_VIEW",
+        payload: view,
+      });
+    };
+
   return {
     getItem,
     setItems,
     addItem,
     updateItem,
     removeItem,
+    setActiveView,
     ...state,
   };
 }

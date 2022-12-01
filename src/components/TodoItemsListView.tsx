@@ -10,6 +10,7 @@ import { Priority, TodoItem } from "typings/types.d";
 import TodoEditor from "./TodoEditor";
 import cn from "clsx";
 import React from "react";
+import NullState from "./NullState";
 
 interface TodoItemsListViewProps extends React.HTMLAttributes<HTMLDivElement> {
   priorityFilter?: Priority;
@@ -78,6 +79,12 @@ export default function TodoItemsListView({
   );
   const [showAddItem, setShowAddItem] = React.useState(false);
 
+  const visibleItems = items.filter(
+    (item: TodoItem) => !priorityFilter || item.priority === priorityFilter
+  );
+
+  const showNullState = visibleItems.length === 0 && !showAddItem;
+
   const handleRemoveFn = (id: string) => {
     return (event: React.SyntheticEvent) => {
       event.stopPropagation();
@@ -114,52 +121,47 @@ export default function TodoItemsListView({
       <div className="p-3">
         <div className="px-3">{renderHeading(priorityFilter)}</div>
         <div className="overflow-y-scroll">
-          {items
-            .filter(
-              (item: TodoItem) =>
-                !priorityFilter || item.priority === priorityFilter
-            )
-            .map((item: TodoItem) =>
-              editItem?.id === item.id ? (
-                <TodoEditor
-                  key={item.id}
-                  value={item}
-                  priority={priorityFilter}
-                  onClose={handleEditClose}
-                />
-              ) : (
+          {visibleItems.map((item: TodoItem) =>
+            editItem?.id === item.id ? (
+              <TodoEditor
+                key={item.id}
+                value={item}
+                priority={priorityFilter}
+                onClose={handleEditClose}
+              />
+            ) : (
+              <div
+                key={item.id}
+                className="flex justify-between hover:bg-orange-50 hover:rounded-sm"
+              >
                 <div
-                  key={item.id}
-                  className="flex justify-between hover:bg-orange-50 hover:rounded-sm"
+                  className="grow items-center px-3"
+                  onClick={handleEditFn(item)}
                 >
-                  <div
-                    className="grow items-center px-3"
-                    onClick={handleEditFn(item)}
-                  >
-                    {item.title}
-                  </div>
-                  <div className="flex flex-row divide-x">
-                    <div className="flex flex-row">
-                      {Object.keys(PriorityIcons)
-                        .filter((key) => key != priorityFilter?.toString())
-                        .map((key: any) => (
-                          <IconButton
-                            key={key}
-                            Icon={PriorityIcons[key].icon}
-                            title={PriorityIcons[key].title}
-                            onClick={handleUpdateFn(item.id, +key)}
-                          />
-                        ))}
-                    </div>
-                    <IconButton
-                      Icon={TrashIcon}
-                      onClick={handleRemoveFn(item.id)}
-                      title="Delete"
-                    />
-                  </div>
+                  {item.title}
                 </div>
-              )
-            )}
+                <div className="flex flex-row divide-x">
+                  <div className="flex flex-row">
+                    {Object.keys(PriorityIcons)
+                      .filter((key) => key != priorityFilter?.toString())
+                      .map((key: any) => (
+                        <IconButton
+                          key={key}
+                          Icon={PriorityIcons[key].icon}
+                          title={PriorityIcons[key].title}
+                          onClick={handleUpdateFn(item.id, +key)}
+                        />
+                      ))}
+                  </div>
+                  <IconButton
+                    Icon={TrashIcon}
+                    onClick={handleRemoveFn(item.id)}
+                    title="Delete"
+                  />
+                </div>
+              </div>
+            )
+          )}
           {showAddItem && (
             <TodoEditor
               priority={priorityFilter}
@@ -168,6 +170,9 @@ export default function TodoItemsListView({
           )}
         </div>
       </div>
+      {showNullState && (
+        <NullState>Click anywhere to add a new Todo item!</NullState>
+      )}
     </div>
   );
 }
