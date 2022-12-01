@@ -11,9 +11,9 @@ export enum Priority {
 }
 
 export type ActiveView = {
-  view?: ViewType
-  priority?: Priority
-}
+  view?: ViewType;
+  priority?: Priority;
+};
 export interface TodoItem {
   id: string;
   priority: Priority;
@@ -39,7 +39,7 @@ export interface TodoProviderState {
 }
 
 export type TodoActions =
-  | { type: "SET_ACTIVE_VIEW"; payload: ActiveView}
+  | { type: "SET_ACTIVE_VIEW"; payload: ActiveView }
   | { type: "SET_ITEMS"; payload: TodoItem[] }
   | { type: "ADD_ITEM"; payload: TodoItem }
   | { type: "REMOVE_ITEM"; id: TodoItem["id"] }
