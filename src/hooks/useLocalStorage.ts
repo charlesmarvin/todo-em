@@ -10,11 +10,12 @@ export default function useLocalStorage<T>(
     if (data) {
       try {
         const parsedData = JSON.parse(data);
+        // TODO(marvin) remove the following after users migrate!
         if (typeof parsedData.activeView === "string") {
           console.log("Migration view persistence schema");
           parsedData.activeView = {
-            view: parsedData.activeView ?? 1,
-            priority: parsedData.activePriority ?? 1,
+            view: parsedData.activeView > 0 ? parsedData.activeView : 1,
+            priority: parsedData.activePriority > 0 ? parsedData.activePriority : 1,
           };
         }
         setStoredValue(parsedData);
