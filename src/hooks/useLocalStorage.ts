@@ -13,8 +13,8 @@ export default function useLocalStorage<T>(
         if (typeof parsedData.activeView === "string") {
           console.log("Migration view persistence schema");
           parsedData.activeView = {
-            view: parsedData.activeView,
-            priority: parsedData.activePriority,
+            view: parsedData.activeView ?? 1,
+            priority: parsedData.activePriority ?? 1,
           };
         }
         setStoredValue(parsedData);
