@@ -70,6 +70,7 @@ function IconButton({
 }
 
 export default function TodoItemsListView({
+  className,
   priorityFilter = Priority.DO,
   ...props
 }: TodoItemsListViewProps) {
@@ -117,7 +118,12 @@ export default function TodoItemsListView({
     setShowAddItem(false);
   };
   return (
-    <div {...props} onClick={handleShowAddItem} data-container>
+    <div
+      className={cn("flex flex-col", className)}
+      {...props}
+      onClick={handleShowAddItem}
+      data-container
+    >
       <div className="p-3">
         <div className="px-3">{renderHeading(priorityFilter)}</div>
         <div className="overflow-y-scroll">
