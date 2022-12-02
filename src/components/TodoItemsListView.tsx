@@ -17,10 +17,13 @@ interface TodoItemsListViewProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const PriorityIcons = {
-  [Priority.DO]: { icon: SparklesIcon, title: "Do" },
-  [Priority.SCHEDULE]: { icon: CalendarDaysIcon, title: "Schedule" },
-  [Priority.DELEGATE]: { icon: ArrowUturnRightIcon, title: "Delegate" },
-  [Priority.DELETE]: { icon: ArchiveBoxXMarkIcon, title: "Don&apos;t Care" },
+  [Priority.DO]: { icon: SparklesIcon, title: "Move to Do" },
+  [Priority.SCHEDULE]: { icon: CalendarDaysIcon, title: "Move to Schedule" },
+  [Priority.DELEGATE]: { icon: ArrowUturnRightIcon, title: "Move to Delegate" },
+  [Priority.DELETE]: {
+    icon: ArchiveBoxXMarkIcon,
+    title: "Move to Don&apos;t Care",
+  },
 };
 
 const renderHeading = (priority?: Priority) => {
@@ -89,7 +92,12 @@ export default function TodoItemsListView({
   const handleRemoveFn = (id: string) => {
     return (event: React.SyntheticEvent) => {
       event.stopPropagation();
-      removeItem(id);
+      const deleteConfirmed = confirm(
+        "Are you sure you want to permanently delete this task?"
+      );
+      if (deleteConfirmed) {
+        removeItem(id);
+      }
     };
   };
   const handleUpdateFn = (id: string, priority: Priority) => {
@@ -162,7 +170,7 @@ export default function TodoItemsListView({
                   <IconButton
                     Icon={TrashIcon}
                     onClick={handleRemoveFn(item.id)}
-                    title="Delete"
+                    title="Delete task"
                   />
                 </div>
               </div>
