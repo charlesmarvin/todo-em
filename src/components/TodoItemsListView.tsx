@@ -22,20 +22,20 @@ const PriorityIcons = {
   [Priority.DELEGATE]: { icon: ArrowUturnRightIcon, title: "Move to Delegate" },
   [Priority.DELETE]: {
     icon: ArchiveBoxXMarkIcon,
-    title: "Move to Don&apos;t Care",
+    title: "Move to Don&apos;t Do",
   },
 };
 
 const renderHeading = (priority?: Priority) => {
   switch (priority) {
     case Priority.DO:
-      return <strong>Do</strong>;
+      return <strong>Do First</strong>;
     case Priority.SCHEDULE:
       return <strong>Schedule</strong>;
     case Priority.DELEGATE:
       return <strong>Delegate</strong>;
     case Priority.DELETE:
-      return <strong>Don&apos;t Care</strong>;
+      return <strong>Don&apos;t Do</strong>;
     default:
       return <></>;
   }

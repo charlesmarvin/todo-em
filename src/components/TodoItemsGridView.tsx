@@ -18,10 +18,10 @@ export default function TodoItemsGridView({
             <div className="grid md:grid-cols-2 md:divide-x h-full w-full">
               <div className="grid md:grid-rows-2 md:divide-y">
                 <TodoItemsListView priorityFilter={Priority.DO} />
-                <TodoItemsListView priorityFilter={Priority.SCHEDULE} />
+                <TodoItemsListView priorityFilter={Priority.DELEGATE} />
               </div>
               <div className="grid md:grid-rows-2 md:divide-y">
-                <TodoItemsListView priorityFilter={Priority.DELEGATE} />
+                <TodoItemsListView priorityFilter={Priority.SCHEDULE} />
                 <TodoItemsListView priorityFilter={Priority.DELETE} />
               </div>
             </div>

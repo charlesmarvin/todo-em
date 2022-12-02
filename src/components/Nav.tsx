@@ -59,7 +59,7 @@ export default function Nav({ activeView, onSelect }: NavProps) {
         Icon={SparklesIcon}
         onClick={handleFilterFn(Priority.DO)}
         isActive={!isGridActive && activeView.priority === Priority.DO}
-        title="Do"
+        title="Do First Task List"
       >
         Do
       </NavButton>
@@ -67,7 +67,7 @@ export default function Nav({ activeView, onSelect }: NavProps) {
         Icon={ArrowUturnRightIcon}
         onClick={handleFilterFn(Priority.DELEGATE)}
         isActive={!isGridActive && activeView.priority === Priority.DELEGATE}
-        title="Delegate"
+        title="Delegate Task List"
       >
         Delegate
       </NavButton>
@@ -82,9 +82,9 @@ export default function Nav({ activeView, onSelect }: NavProps) {
         Icon={ArchiveBoxXMarkIcon}
         onClick={handleFilterFn(Priority.DELETE)}
         isActive={!isGridActive && activeView.priority === Priority.DELETE}
-        title="Don't Care"
+        title="Don't Do Task List"
       >
-        Don&apos;t Care
+        Don&apos;t Do
       </NavButton>
 
       <div className="w-full border-t border-gray-300" />
@@ -93,7 +93,7 @@ export default function Nav({ activeView, onSelect }: NavProps) {
         Icon={Squares2X2Icon}
         onClick={handleViewChange}
         isActive={isGridActive}
-        title="All Items"
+        title="All Tasks Eisenhower Matrix"
       >
         All Items
       </NavButton>
